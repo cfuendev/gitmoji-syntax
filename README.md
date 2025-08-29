@@ -1,8 +1,15 @@
 <h1 align='center'>cfuen's gitmoji syntax + builder
 
+<br>
 <a href="https://gitmoji.dev">
   <img
     src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square"
+    alt="Gitmoji"
+  />
+</a>
+<a>
+  <img
+    src="https://img.shields.io/badge/version-1.0-blue.svg?style=flat-square"
     alt="Gitmoji"
   />
 </a>
@@ -24,7 +31,7 @@ For this, I created
 
 ## how?
 
-As of v.0.1.0 (First version) there's 4 categories:
+As of v.1.0 (First version) there's 4 categories:
 - Project Stage: Reflects the stage of the project that this commit marks. They're few and optional.
 - Commit Type: Explains the type of code/changes that make up the commit. Mandatory.
 - Commit Area: Explains the specific part of the codebase that is being worked on. Mandatory. Up to 2.
