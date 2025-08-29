@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
+    <title>gitmoji builder</title>
+    <style>
+      :root {
+        --hero-bg: #ffdd67;
+        --main-bg: #121212;
+        height: 100%;
+      }
+
+      body {
+        background-color: var(--main-bg);
+        height: 100%;
+      }
+
+      #Hero {
+        background-color: var(--hero-bg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 2rem 1rem;
+        height: 2292pxx;
+      }
+
+      #GitmojiRNG {
+        width: 30px;
+      }
+
+      #Hero h1,
+      #Hero h3,
+      #Hero p {
+        margin: 0.5rem 0;
+        color: black;
+      }
+
+      .hero-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+        height: 54px;
+        display: flex;
+        flex-direction: row;
+        align-items: end;
+      }
+
+      .hero-buttons > a {
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        transition: all 0.2s ease;
+        background-color: #ff5a79;
+        color: white;
+        border-bottom: 4px solid #f3002e;
+        border-radius: 4px;
+      }
+
+      .hero-buttons > a:hover {
+        height: 50px;
+        border-bottom-width: 2px;
+      }
+
+      .hero-buttons > a > img {
+        width: 25px;
+        margin-right: 5px;
+      }
+
+      main#Builder {
+        color: var(--pico-color);
+        margin: 92px;
+        padding: 33px;
+        margin-top: 30px;
+        padding-bottom: 30px;
+        height: 50%;
+      }
+
+      .emoji-selectors {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      select,
+      input,
+      .commit-preview {
+        --pico-background-color: #2b2b2b;
+        --pico-border-color: none;
+        color: var(--pico-form-element-color);
+        --pico-form-element-placeholder-color: var(--pico-form-element-color);
+      }
+
+      :where(select, textarea):not([readonly]):focus,
+      input:not(
+          [type="submit"],
+          [type="button"],
+          [type="reset"],
+          [type="range"],
+          [type="file"],
+          [readonly]
+        ):focus {
+        --pico-background-color: #2b2b2b;
+        --pico-border-color: none;
+        --pico-box-shadow: 0 0 0 2px white;
+      }
+
+      .commit-preview {
+        background-color: var(--pico-background-color);
+        border: 1px solid var(--pico-border-color);
+        border-radius: var(--pico-border-radius);
+        padding: 1rem;
+        font-family: monospace;
+      }
+
+      #SecondRow {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 5%;
+        align-items: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header id="Hero">
+      <h1>gitm<img id="GitmojiRNG" />ji builder</h1>
+      <h3>An emoji builder for your commit messages</h3>
+      <p>
+        Based on
+        <a href="https://github.com/cfuendev/gitmoji-syntax"
+          >cfuen's gitmoji syntax</a
+        >
+      </p>
+      <div class="hero-buttons">
+        <a href="https://github.com/cfuendev/gitmoji-syntax" target="_blank"
+          ><img src="https://api.iconify.design/emojione/star.svg?color=yellow">GitHub</a
+        >
+        <a href="https://github.com/cfuendev" target="_blank"><img src="https://api.iconify.design/mingcute/github-fill.svg?color=white">cfuendev</a>
+      </div>
+    </header>
+
+    <main id="Builder">
+      <div class="builder-container">
+        <h2>Build Your Commit Message</h2>
+
+        <div class="emoji-selectors">
+          <!-- Project Stage -->
+          <div>
+            <label for="project-stage">Project Stage (Max. 1)</label>
+            <select id="project-stage">
+              <option value="">Select stage...</option>
+              <option value=":tada:">BEGIN PROJECT - 🎉</option>
+              <option value=":construction:">UNFINISHED (WIP) - 🚧</option>
+              <option value=":rocket:">DEPLOYMENT - 🚀</option>
+              <option value=":bookmark:">RELEASE - 🔖</option>
+            </select>
+          </div>
+
+          <!-- Commit Type -->
+          <div>
+            <label for="commit-type">Commit Type (Max. 1)</label>
+            <select id="commit-type">
+              <option value="">Select type...</option>
+              <option value=":sparkles:">NEW FEATURE - ✨</option>
+              <option value=":bug:">BIG ISSUE/FIX - 🐛</option>
+              <option value=":adhesive_bandage:">MINOR ISSUE/FIX - 🩹</option>
+              <option value=":zap:">OPTIMIZATION - ⚡</option>
+              <option value=":recycle:">REFACTORING - ♻️</option>
+            </select>
+          </div>
+
+          <!-- Commit Area 1 -->
+          <div>
+            <label for="commit-area-1">Commit Area 1</label>
+            <select id="commit-area-1">
+              <option value="">Select area...</option>
+              <optgroup label="Front-end">
+                <option value=":lipstick:">UI STUFF - 💄</option>
+                <option value=":iphone:">RESPONSIVITY - 📱</option>
+                <option value=":mag:">SEO - 🔍</option>
+              </optgroup>
+              <optgroup label="Back-end">
+                <option value=":passport_control:">AUTH - 🛂</option>
+              </optgroup>
+              <optgroup label="DevOps and QA">
+                <option value=":construction_worker:">CI PIPELINE - 👷</option>
+                <option value=":test_tube:">TESTING - 🧪</option>
+                <option value=":package:">
+                  COMPILED FILES / PACKAGES - 📦
+                </option>
+              </optgroup>
+              <optgroup label="General">
+                <option value=":label:">TYPES - 🏷️</option>
+                <option value=":globe_with_meridians:">I18N - 🌐</option>
+                <option value=":wheelchair:">A11Y - ♿</option>
+                <option value=":hammer:">DEV TOOLING - 🔨</option>
+                <option value=":card_file_box:">DATASOURCES - 🗃️</option>
+                <option value=":bento:">ASSETS / CONTENT - 🍱</option>
+                <option value=":wrench:">CONFIGURATION - 🔧</option>
+                <option value=":art:">FORMATTING / READABILITY - 🎨</option>
+                <option value=":bulb:">COMMENTS - 💡</option>
+                <option value=":memo:">DOCS - 📝</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Commit Area 2 -->
+          <div>
+            <label for="commit-area-2">Commit Area 2</label>
+            <select id="commit-area-2">
+              <option value="">Select area...</option>
+              <optgroup label="Front-end">
+                <option value=":lipstick:">UI STUFF - 💄</option>
+                <option value=":iphone:">RESPONSIVITY - 📱</option>
+                <option value=":mag:">SEO - 🔍</option>
+              </optgroup>
+              <optgroup label="Back-end">
+                <option value=":passport_control:">AUTH - 🛂</option>
+              </optgroup>
+              <optgroup label="DevOps and QA">
+                <option value=":construction_worker:">CI PIPELINE - 👷</option>
+                <option value=":test_tube:">TESTING - 🧪</option>
+                <option value=":package:">
+                  COMPILED FILES / PACKAGES - 📦
+                </option>
+              </optgroup>
+              <optgroup label="General">
+                <option value=":label:">TYPES - 🏷️</option>
+                <option value=":globe_with_meridians:">I18N - 🌐</option>
+                <option value=":wheelchair:">A11Y - ♿</option>
+                <option value=":hammer:">DEV TOOLING - 🔨</option>
+                <option value=":card_file_box:">DATASOURCES - 🗃️</option>
+                <option value=":bento:">ASSETS / CONTENT - 🍱</option>
+                <option value=":wrench:">CONFIGURATION - 🔧</option>
+                <option value=":art:">FORMATTING / READABILITY - 🎨</option>
+                <option value=":bulb:">COMMENTS - 💡</option>
+                <option value=":memo:">DOCS - 📝</option>
+              </optgroup>
+            </select>
+          </div>
+
+          <!-- Misc -->
+          <div>
+            <label for="misc">Misc.</label>
+            <select id="misc">
+              <option value="">Select misc...</option>
+              <option value=":beers:">DRUNKEN / HIGH - 🍻</option>
+              <option value=":poop:">BAD CODE - 💩</option>
+              <option value=":pencil2:">TYPO - ✏️</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Second Row -->
+        <div id="SecondRow" style="display: flex; flex-direction: row">
+          <!-- Commit Message Input -->
+          <div style="width: 45%; height: 100%">
+            <label for="commit-message">Commit Message</label>
+            <input
+              type="text"
+              id="commit-message"
+              placeholder="Enter your commit message here..."
+            />
+          </div>
+
+          <!-- Preview -->
+          <div class="commit-preview" style="width: 45%; height: 100%">
+            <strong>Preview:</strong>
+            <div id="preview-output">
+              Your commit message will appear here...
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      window.state = {};
+      window.state.emojis = [
+        "smiling-face-with-heart-eyes",
+        "smiling-face-with-sunglasses",
+        "winking-face-with-tongue",
+        "flushed-face",
+        "face-with-tears-of-joy",
+        "smiling-face-with-open-mouth-and-closed-eyes",
+        "kissing-face-with-closed-eyes",
+        "face-savoring-food",
+        "sleeping-face",
+      ];
+    </script>
+
+    <script>
+      // Function to update the preview
+      function updatePreview() {
+        const projectStage = document.getElementById("project-stage").value;
+        const commitType = document.getElementById("commit-type").value;
+        const commitArea1 = document.getElementById("commit-area-1").value;
+        const commitArea2 = document.getElementById("commit-area-2").value;
+        const misc = document.getElementById("misc").value;
+        const commitMessage = document.getElementById("commit-message").value;
+
+        // Build the emoji prefix
+        let emojiPrefix = "";
+        const emojis = [
+          projectStage,
+          commitType,
+          commitArea1,
+          commitArea2,
+          misc,
+        ].filter((emoji) => emoji);
+
+        if (emojis.length > 0) {
+          emojiPrefix = emojis.join(" ") + " ";
+        }
+
+        // Update preview
+        const previewOutput = document.getElementById("preview-output");
+        if (emojiPrefix || commitMessage) {
+          previewOutput.textContent = emojiPrefix + commitMessage;
+        } else {
+          previewOutput.textContent = "Your commit message will appear here...";
+        }
+      }
+
+      // Add event listeners to all inputs
+      document.querySelectorAll("select, input").forEach((element) => {
+        element.addEventListener("change", updatePreview);
+        element.addEventListener("input", updatePreview);
+      });
+
+      // Initial preview update
+      updatePreview();
+
+      document.querySelector("#GitmojiRNG").src =
+        "https://api.iconify.design/emojione/" +
+        window.state.emojis[
+          Math.round(Math.random() * window.state.emojis.length)
+        ] +
+        ".svg";
+    </script>
+  </body>
+</html>
